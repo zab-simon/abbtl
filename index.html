@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAGI Deutschland - Advisory Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    :root {
+        --black: #000000;
+        --red: #FF0000;
+        --gold: #FFCC00;
+        --white: #FFFFFF;
+        --gray: #F5F5F5;
+        --dark-gray: #333333;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        color: var(--black);
+    }
+
+    .flag-gradient {
+        background: linear-gradient(135deg, var(--black) 0%, var(--red) 50%, var(--gold) 100%);
+        background-size: 400% 400%;
+        animation: flagWave 6s ease-in-out infinite;
+    }
+
+    @keyframes flagWave {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        padding: 0 2rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .hero .subtitle {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background: var(--gold);
+        color: var(--black);
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 204, 0, 0.5);
+        background: #FFD700;
+    }
+
+    .section {
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--black);
+    }
+
+    .problem-solution {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        border-left: 4px solid var(--red);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--red);
+    }
+
+    .reasons-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+        margin: 3rem 0;
+    }
+
+    .reason-item {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .reason-item:hover {
+        border-color: var(--gold);
+        box-shadow: 0 4px 12px rgba(255, 204, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .reason-item.active {
+        background: linear-gradient(135deg, #FFF8E1, #FFFDE7);
+        border-color: var(--gold);
+    }
+
+    .reason-number {
+        font-weight: 700;
+        color: var(--red);
+        font-size: 0.9rem;
+    }
+
+    .reason-text {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+        font-weight: 500;
+    }
+
+    .search-filter {
+        margin: 2rem 0;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-input {
+        padding: 0.8rem 1.2rem;
+        border: 2px solid #ddd;
+        border-radius: 25px;
+        font-size: 1rem;
+        width: 300px;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: var(--gold);
+    }
+
+    .filter-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .filter-tag {
+        background: var(--gray);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .filter-tag:hover, .filter-tag.active {
+        background: var(--gold);
+        color: var(--black);
+    }
+
+    .stats-section {
+        background: var(--gray);
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .stat-item {
+        background: white;
+        padding: 2rem 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--red);
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        color: var(--dark-gray);
+        margin-top: 0.5rem;
+    }
+
+    .logos-section {
+        padding: 3rem 2rem;
+        background: white;
+        text-align: center;
+    }
+
+    .logos-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin: 2rem 0;
+    }
+
+    .logo-item {
+        padding: 1rem 2rem;
+        background: var(--gray);
+        border-radius: 8px;
+        font-weight: 600;
+        color: var(--dark-gray);
+        min-width: 120px;
+    }
+
+    .final-cta {
+        background: linear-gradient(135deg, var(--black), var(--red));
+        color: white;
+        text-align: center;
+        padding: 6rem 2rem;
+        position: relative;
+    }
+
+    .final-cta::before {
+        content: '🇩🇪';
+        font-size: 8rem;
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        opacity: 0.1;
+    }
+
+    .final-cta h2 {
+        color: white;
+        font-size: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    .final-cta p {
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .cta-secondary {
+        background: transparent;
+        border: 2px solid var(--gold);
+        color: var(--gold);
+    }
+
+    .cta-secondary:hover {
+        background: var(--gold);
+        color: var(--black);
+    }
+
+    .floating-cta {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .emergency-banner {
+        background: var(--red);
+        color: white;
+        padding: 1rem 2rem;
+        text-align: center;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .emergency-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .reasons-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .search-input {
+            width: 100%;
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="emergency-banner">
+        ⚠️ DRINGEND: Deutschlands KI-Souveränität steht auf dem Spiel - Handeln Sie JETZT!
+    </div>
+
+```
+<section class="hero flag-gradient">
+    <div class="hero-content">
+        <h1>🇩🇪 OpenAGI</h1>
+        <p class="subtitle">Der digitale Schutzschild für Deutschlands Souveränität</p>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
+            Cybersicherheit • Verteidigung • Wirtschaftswachstum • Privatsphäre<br>
+            <strong>Ihre Führungsrolle im Advisory Board</strong>
+        </p>
+        <a href="#join" class="cta-button">🚀 Jetzt dem Advisory Board beitreten</a>
+    </div>
+</section>
+
+<section class="section">
+    <h2>🚨 Warum JETZT handeln?</h2>
+    <div class="problem-solution">
+        <div class="card">
+            <h3>❌ Das Problem</h3>
+            <ul>
+                <li>🇺🇸🇨🇳 Totale Abhängigkeit von USA/China</li>
+                <li>🔓 Steigende Cyber-Bedrohungen</li>
+                <li>📊 Massiver Datenabfluss ins Ausland</li>
+                <li>⚡ Kritische Infrastruktur ungeschützt</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>⚠️ Die Herausforderung</h3>
+            <ul>
+                <li>📉 Deutschland verliert KI-Leadership</li>
+                <li>🏭 Industrie 4.0 ohne deutsche Kontrolle</li>
+                <li>🧠 Brain-Drain zu BigTech USA</li>
+                <li>🛡️ Nationale Sicherheit gefährdet</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>✅ Die Lösung: OpenAGI</h3>
+            <ul>
+                <li>🇩🇪 100% deutsche KI-Souveränität</li>
+                <li>🛡️ Militärgrade Cybersicherheit</li>
+                <li>🚀 Europa als KI-Weltmacht</li>
+                <li>💶 Billionen-Markt für Deutschland</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin: 3rem 0;">
+        <a href="#join" class="cta-button">🔥 Erklärung zur KI-Souveränität unterzeichnen</a>
+    </div>
+</section>
+
+<section class="stats-section">
+    <h2>📊 Die Zahlen sprechen für sich</h2>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <span class="stat-number">500</span>
+            <span class="stat-label">Gründe für Advisory Board</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">€2.5T</span>
+            <span class="stat-label">KI-Marktpotenzial</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">100k+</span>
+            <span class="stat-label">Neue Arbeitsplätze</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Cyberschutz aktiv</span>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>🎯 500 Gründe für Ihre Teilnahme</h2>
+    <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">
+        Entdecken Sie alle strategischen Vorteile einer Advisory Board Mitgliedschaft
+    </p>
+    
+    <div class="search-filter">
+        <input type="text" class="search-input" placeholder="🔍 Gründe durchsuchen..." id="searchInput">
+        <div class="filter-tags">
+            <span class="filter-tag active" data-category="all">Alle</span>
+            <span class="filter-tag" data-category="sicherheit">🛡️ Sicherheit</span>
+            <span class="filter-tag" data-category="wirtschaft">💶 Wirtschaft</span>
+            <span class="filter-tag" data-category="politik">🏛️ Politik</span>
+            <span class="filter-tag" data-category="technologie">🚀 Technologie</span>
+            <span class="filter-tag" data-category="gesellschaft">🧑‍🤝‍🧑 Gesellschaft</span>
+        </div>
+    </div>
+
+    <div class="reasons-grid" id="reasonsGrid">
+        <!-- Reasons will be populated by JavaScript -->
+    </div>
+
+    <div style="text-align: center; margin: 3rem 0;">
+        <a href="#join" class="cta-button">💬 Gespräch vereinbaren</a>
+    </div>
+</section>
+
+<section class="logos-section">
+    <h2>🤝 Unterstützt von führenden Institutionen</h2>
+    <div class="logos-grid">
+        <div class="logo-item">🎓 KIT Karlsruhe</div>
+        <div class="logo-item">🔬 Helmholtz</div>
+        <div class="logo-item">🏭 Fraunhofer</div>
+        <div class="logo-item">🧠 Max Planck</div>
+        <div class="logo-item">🏛️ BMBF</div>
+        <div class="logo-item">🇪🇺 EU Commission</div>
+    </div>
+    
+    <div style="text-align: center; margin: 2rem 0;">
+        <p><strong>GPU-Cluster Standorte:</strong> 📍 Karlsruhe • 📍 Frankfurt • 📍 München</p>
+    </div>
+</section>
+
+<section class="final-cta">
+    <h2>🇩🇪 Ihre Entscheidung heute = Digitaler Schutzschild morgen</h2>
+    <p>Werden Sie Teil der KI-Revolution. Schützen Sie Deutschlands Zukunft.</p>
+    <div class="cta-buttons">
+        <a href="#join" class="cta-button">🚀 Jetzt Advisory Board Mitglied werden</a>
+        <a href="#contact" class="cta-button cta-secondary">📞 Sofort-Gespräch buchen</a>
+    </div>
+</section>
+
+<div class="floating-cta">
+    <a href="#join" class="cta-button" style="font-size: 0.9rem; padding: 0.8rem 1.5rem;">
+        🔥 Beitreten
+    </a>
+</div>
+
+<script>
+    const reasons = [
+        {id: 1, text: "🇩🇪 Schutz deutscher Souveränität", category: "sicherheit"},
+        {id: 2, text: "🛡️ Beteiligung an nationaler Sicherheit", category: "sicherheit"},
+        {id: 3, text: "🔐 Garantie der Privatsphäre der Bürger", category: "sicherheit"},
+        {id: 4, text: "💶 Wirtschaftswachstum", category: "wirtschaft"},
+        {id: 5, text: "📈 Schaffung von Arbeitsplätzen", category: "wirtschaft"},
+        {id: 6, text: "🧠 KI-Führungsrolle", category: "technologie"},
+        {id: 7, text: "🌍 Klimaschutz durch KI-Optimierung", category: "gesellschaft"},
+        {id: 8, text: "⚖️ Ethische Kontrolle über KI", category: "politik"},
+        {id: 9, text: "📊 Stärkung Baden-Württembergs als Industriezentrum", category: "wirtschaft"},
+        {id: 10, text: "🏛️ Politisches Kapital", category: "politik"},
+        {id: 11, text: "📣 PR-Image als Bürgerschützer", category: "politik"},
+        {id: 12, text: "🤝 Erweiterung der Verbindungen zur Wissenschaft (KIT, Helmholtz)", category: "technologie"},
+        {id: 13, text: "🏅 Beitrag zur Zukunft der deutschen Kinder", category: "gesellschaft"},
+        {id: 14, text: "📡 Beteiligung an High-Tech-Projekten", category: "technologie"},
+        {id: 15, text: "💡 Unterstützung von Innovationen", category: "technologie"},
+        {id: 16, text: "📜 Einfluss auf KI-Gesetzgebung", category: "politik"},
+        {id: 17, text: "🕊️ Alternative zur Abhängigkeit von USA/China", category: "sicherheit"},
+        {id: 18, text: "🧩 Überparteilicher Konsens", category: "politik"},
+        {id: 19, text: "🔍 Transparenz und Kontrolle", category: "politik"},
+        {id: 20, text: "🎯 Regionale Bedeutung", category: "politik"},
+        {id: 21, text: "🧑‍🎓 Unterstützung für Studenten und Forscher", category: "gesellschaft"},
+        {id: 22, text: "🧑‍💻 Schaffung digitaler Arbeitsplätze", category: "wirtschaft"},
+        {id: 23, text: "🏦 Anziehung von Investitionen", category: "wirtschaft"},
+        {id: 24, text: "🚀 Strategischer Technologieexport", category: "wirtschaft"},
+        {id: 25, text: "🏥 Durchbrüche im Gesundheitswesen", category: "gesellschaft"},
+        {id: 26, text: "⏳ Erhöhung der Lebenserwartung", category: "gesellschaft"},
+        {id: 27, text: "🧬 Biotechnologie-Entwicklung", category: "technologie"},
+        {id: 28, text: "🌐 Europa als KI-Zentrum", category: "politik"},
+        {id: 29, text: "🏗️ Infrastrukturprojekte", category: "wirtschaft"},
+        {id: 30, text: "⚔️ Verteidigungsunabhängigkeit", category: "sicherheit"},
+        {id: 31, text: "🛰️ Weltraumtechnologien", category: "technologie"},
+        {id: 32, text: "📡 Verbesserung der Kommunikation", category: "technologie"},
+        {id: 33, text: "🔋 Energieoptimierung", category: "gesellschaft"},
+        {id: 34, text: "🚘 Automobilindustrie BW (Daimler, Porsche)", category: "wirtschaft"},
+        {id: 35, text: "🏭 BASF, Chemie", category: "wirtschaft"},
+        {id: 36, text: "🖥️ SAP, IT-Sektor", category: "wirtschaft"},
+        {id: 37, text: "🧮 Mittelstand-Unterstützung", category: "wirtschaft"},
+        {id: 38, text: "👨‍👩‍👧‍👦 Sozialer Nutzen", category: "gesellschaft"},
+        {id: 39, text: "📚 Bildungsförderung", category: "gesellschaft"},
+        {id: 40, text: "📖 Neue Geschichte für Deutschland", category: "politik"},
+        {id: 41, text: "🕰️ Persönliches Vermächtnis", category: "politik"},
+        {id: 42, text: "🏛️ Einfluss auf EU-Strategie", category: "politik"},
+        {id: 43, text: "🧑‍⚖️ Schutz der Grundrechte", category: "politik"},
+        {id: 44, text: "💎 Führungsrolle in der Datenwirtschaft", category: "wirtschaft"},
+        {id: 45, text: "🥇 Erste souveräne OpenAGI der Welt", category: "technologie"},
+        {id: 46, text: "🧑‍🔬 Wissenschaft auf Weltniveau", category: "technologie"},
+        {id: 47, text: "🏔️ Prestige der Region", category: "politik"},
+        {id: 48, text: "🏅 Politischer Erfolg", category: "politik"},
+        {id: 49, text: "🏛️ Einfluss auf globale Standards", category: "politik"},
+        {id: 50, text: "🌎 Teilnahme an globalen Foren", category: "politik"},
+        {id: 51, text: "📢 Vertrauenszuwachs bei Wählern", category: "politik"},
+        {id: 52, text: "🗳️ Wahlkampfargument", category: "politik"},
+        {id: 53, text: "📰 Medienpräsenz", category: "politik"},
+        {id: 54, text: "🧑‍⚕️ Medizin-Unterstützung", category: "gesellschaft"},
+        {id: 55, text: "🏫 Universitäts-Unterstützung", category: "gesellschaft"},
+        {id: 56, text: "🏗️ Cluster-Aufbau", category: "wirtschaft"},
+        {id: 57, text: "🔧 Technologische Souveränität", category: "technologie"},
+        {id: 58, text: "🌐 Europäische Führungsrolle", category: "politik"},
+        {id: 59, text: "🧑‍💼 Startup-Entwicklung", category: "wirtschaft"},
+        {id: 60, text: "🏆 Weltweites Prestige", category: "politik"},
+        {id: 61, text: "🧑‍🎤 Talente anziehen", category: "wirtschaft"},
+        {id: 62, text: "📈 BIP-Wachstum", category: "wirtschaft"},
+        {id: 63, text: "🛡️ Reduzierung von Cyberrisiken", category: "sicherheit"},
+        {id: 64, text: "🧑‍⚖️ Neue Rechtsordnung für KI", category: "politik"},
+        {id: 65, text: "🎓 Stipendien für Studenten", category: "gesellschaft"},
+        {id: 66, text: "🧭 Politische Mission", category: "politik"},
+        {id: 67, text: "🗂️ EU-Datenverwaltung", category: "politik"},
+        {id: 68, text: "📜 Historische Mission", category: "politik"},
+        {id: 69, text: "🏛️ Board-Teilnahme als Führungssymbol", category: "politik"},
+        {id: 70, text: "📡 Deutschland = KI-Hub", category: "technologie"},
+        {id: 71, text: "🧠 Einfluss auf Weltwissenschaft", category: "technologie"},
+        {id: 72, text: "📊 Verbesserung der Staatsverwaltung", category: "politik"},
+        {id: 73, text: "🧩 KI für die Gesellschaft", category: "gesellschaft"},
+        {id: 74, text: "📦 Neue Industrien", category: "wirtschaft"},
+        {id: 75, text: "🚄 Verkehrsoptimierung", category: "technologie"},
+        {id: 76, text: "🛫 Luftfahrtsicherheit", category: "sicherheit"},
+        {id: 77, text: "🚑 Verbesserung der Notfallmedizin", category: "gesellschaft"},
+        {id: 78, text: "🏥 Krankheitsdiagnostik", category: "gesellschaft"},
+        {id: 79, text: "💉 Neue Medikamente", category: "gesellschaft"},
+        {id: 80, text: "🌱 Ökologie", category: "gesellschaft"},
+        {id: 81, text: "🐝 Biosphäre", category: "gesellschaft"},
+        {id: 82, text: "🔬 Forschung", category: "technologie"},
+        {id: 83, text: "🏛️ Einfluss auf EU-Budget", category: "politik"},
+        {id: 84, text: "🧑‍💼 Networking", category: "politik"},
+        {id: 85, text: "📖 Geschichtsbücher über Sie", category: "politik"},
+        {id: 86, text: "🏅 Führungsstatus", category: "politik"},
+        {id: 87, text: "🗣️ Möglichkeit öffentlicher Auftritte", category: "politik"},
+        {id: 88, text: "🎤 Foren", category: "politik"},
+        {id: 89, text: "🌍 Internationale Sichtbarkeit", category: "politik"},
+        {id: 90, text: "🧑‍🤝‍🧑 Parteiübergreifende Zusammenarbeit", category: "politik"},
+        {id: 91, text: "🛡️ Neue Rolle Deutschlands in der NATO", category: "sicherheit"},
+        {id: 92, text: "🚧 Cyber-Schutzschild", category: "sicherheit"},
+        {id: 93, text: "🧱 Digitale Mauer gegen Angriffe", category: "sicherheit"},
+        {id: 94, text: "🧩 EU-AI-Act mitgestalten", category: "politik"},
+        {id: 95, text: "🏦 KI-Banking", category: "wirtschaft"},
+        {id: 96, text: "📊 Intelligente Finanzen", category: "wirtschaft"},
+        {id: 97, text: "💻 Digitale Demokratie", category: "politik"},
+        {id: 98, text: "🗳️ Intelligente Wahlen", category: "politik"},
+        {id: 99, text: "🏛️ Staatsmodernisierung", category: "politik"},
+        {id: 100, text: "🕊️ Deutschlands Friedensrolle", category: "politik"},
+        {id: 101, text: "🛰️ Satellitensicherheit", category: "sicherheit"},
+        {id: 102, text: "📡 6G/7G Infrastruktur", category: "technologie"},
+        {id: 103, text: "🌐 Europäische Internet-Souveränität", category: "sicherheit"},
+        {id: 104, text: "🛠️ Industrie 4.0 Unterstützung", category: "wirtschaft"},
+        {id: 105, text: "🚜 Intelligente Landwirtschaft", category: "wirtschaft"},
+        {id: 106, text: "🌾 Ernährungssicherheit", category: "gesellschaft"},
+        {id: 107, text: "🏙️ Intelligente Städte", category: "gesellschaft"},
+        {id: 108, text: "💡 Energieeffizienz", category: "gesellschaft"},
+        {id: 109, text: "🌊 Klimakontrolle", category: "gesellschaft"},
+        {id: 110, text: "🏞️ Naturschutz", category: "gesellschaft"},
+        {id: 111, text: "🎓 Erasmus+ KI Programme", category: "gesellschaft"},
+        {id: 112, text: "🧑‍🎓 Jugendprojekte", category: "gesellschaft"},
+        {id: 113, text: "🏅 Olympia-Teilnehmer fördern", category: "gesellschaft"},
+        {id: 114, text: "🏫 Neue Forschungszentren", category: "technologie"},
+        {id: 115, text: "💻 IT-Bildung in Schulen", category: "gesellschaft"},
+        {id: 116, text: "🔍 Deepfake-Schutz", category: "sicherheit"},
+        {id: 117, text: "🛡️ Cyber-Verteidigung", category: "sicherheit"},
+        {id: 118, text: "🗺️ Europäische geopolitische Autonomie", category: "politik"},
+        {id: 119, text: "🌍 Unabhängigkeit von BigTech", category: "technologie"},
+        {id: 120, text: "💶 Staatsausgaben durch KI senken", category: "wirtschaft"},
+        {id: 121, text: "📉 Inflationskontrolle", category: "wirtschaft"},
+        {id: 122, text: "🏦 Neue Finanzaufsicht", category: "wirtschaft"},
+        {id: 123, text: "📊 KI-Budget-Analyse", category: "politik"},
+        {id: 124, text: "🧑‍⚕️ Telemedizin", category: "gesellschaft"},
+        {id: 125, text: "🧬 Genetik unter Kontrolle", category: "gesellschaft"},
+        {id: 126, text: "🧑‍⚖️ Ethische Aufsicht", category: "politik"},
+        {id: 127, text: "🎭 Kulturprojekte", category: "gesellschaft"},
+        {id: 128, text: "🏛️ Wissenschaft-Politik Verbindung", category: "technologie"},
+        {id: 129, text: "📰 Desinformations-Kontrolle", category: "sicherheit"},
+        {id: 130, text: "📡 NATO/EU Cyber Defence Verbindung", category: "sicherheit"},
+        {id: 131, text: "🚀 ESA Beteiligung", category: "technologie"},
+        {id: 132, text: "🛰️ Weltraumindustrie", category: "technologie"},
+        {id: 133, text: "🔬 Neue Materialien", category: "technologie"},
+        {id: 134, text: "🧪 Nanotechnologie", category: "technologie"},
+        {id: 135, text: "🧩 Quantum Computing", category: "technologie"},
+        {id: 136, text: "🧠 Neuromorphic Computing", category: "technologie"},
+        {id: 137, text: "⛑️ Katastrophenschutz", category: "sicherheit"},
+        {id: 138, text: "🚨 Katastrophen-Vorhersage", category: "sicherheit"},
+        {id: 139, text: "🚒 Brandschutz", category: "sicherheit"},
+        {id: 140, text: "🚑 KI-Rettungswagen", category: "gesellschaft"},
+        {id: 141, text: "🏭 Industrie-Robotisierung", category: "wirtschaft"},
+        {id: 142, text: "🏗️ KI im Bauwesen", category: "wirtschaft"},
+        {id: 143, text: "🚚 Logistik", category: "wirtschaft"},
+        {id: 144, text: "🚄 Eisenbahn", category: "technologie"},
+        {id: 145, text: "🚢 Seenavigation", category: "technologie"},
+        {id: 146, text: "🛳️ Hafenschutz", category: "sicherheit"},
+        {id: 147, text: "✈️ Luftfahrt", category: "technologie"},
+        {id: 148, text: "🚁 Drohnen", category: "technologie"},
+        {id: 149, text: "🛰️ Geodaten", category: "technologie"},
+        {id: 150, text: "🧭 Szenario-Planung", category: "politik"},
+        {id: 151, text: "🕹️ Simulationen", category: "technologie"},
+        {id: 152, text: "🎮 Gamification der Bildung", category: "gesellschaft"},
+        {id: 153, text: "🎨 Kreativindustrie unterstützen", category: "wirtschaft"},
+        {id: 154, text: "🎬 KI-Filme", category: "gesellschaft"},
+        {id: 155, text: "🎧 KI-Musik", category: "gesellschaft"},
+        {id: 156, text: "🎙️ KI-Radio", category: "gesellschaft"},
+        {id: 157, text: "📚 Wissenschaftliche Publikationen", category: "technologie"},
+        {id: 158, text: "🧾 Historisches KI-Archiv", category: "gesellschaft"},
+        {id: 159, text: "📖 Bibliotheken unterstützen", category: "gesellschaft"},
+        {id: 160, text: "🏦 KI für Steuerbehörden", category: "politik"},
+        {id: 161, text: "💰 Geldwäsche bekämpfen", category: "sicherheit"},
+        {id: 162, text: "💳 Intelligente Zahlungen", category: "technologie"},
+        {id: 163, text: "💸 Korruption reduzieren", category: "politik"},
+        {id: 164, text: "🔍 Audit KI", category: "politik"},
+        {id: 165, text: "📜 Verfassungsschutz unterstützen", category: "sicherheit"},
+        {id: 166, text: "⚖️ Justizunabhängigkeit", category: "politik"},
+        {id: 167, text: "🧑‍⚖️ Gerichtssimulationen", category: "politik"},
+        {id: 168, text: "📜 Neuer KI-Kodex", category: "politik"},
+        {id: 169, text: "🗣️ Bürgerbeteiligung", category: "politik"},
+        {id: 170, text: "🗳️ E-Voting", category: "politik"},
+        {id: 171, text: "🏛️ Parlament digitalisieren", category: "politik"},
+        {id: 172, text: "🖥️ KI für Behörden", category: "politik"},
+        {id: 173, text: "🗂️ Papierloses Amt", category: "politik"},
+        {id: 174, text: "📡 Bundescloud", category: "technologie"},
+        {id: 175, text: "🧩 Einheitliche Standards", category: "technologie"},
+        {id: 176, text: "📦 Lieferketten-Resilienz", category: "wirtschaft"},
+        {id: 177, text: "🚧 Kritische Infrastruktur", category: "sicherheit"},
+        {id: 178, text: "🔋 Energienetze", category: "technologie"},
+        {id: 179, text: "⚡ Intelligente Netze", category: "technologie"},
+        {id: 180, text: "☢️ Atomsicherheit überwachen", category: "sicherheit"},
+        {id: 181, text: "⛽ Energiewende", category: "gesellschaft"},
+        {id: 182, text: "🌞 Solaroptimierung", category: "technologie"},
+        {id: 183, text: "💨 Windparks", category: "technologie"},
+        {id: 184, text: "💧 Wassersicherheit", category: "sicherheit"},
+        {id: 185, text: "🚰 Intelligentes Wasser", category: "technologie"},
+        {id: 186, text: "🌊 Hochwasserschutz", category: "sicherheit"},
+        {id: 187, text: "🧯 KI-Branderkennung", category: "sicherheit"},
+        {id: 188, text: "🛑 Terror-Prävention", category: "sicherheit"},
+        {id: 189, text: "🕵️ Spionageabwehr", category: "sicherheit"},
+        {id: 190, text: "🛡️ Hybride Kriegsführung Abwehr", category: "sicherheit"},
+        {id: 191, text: "🎖️ Militärisches Prestige", category: "sicherheit"},
+        {id: 192, text: "🚔 Polizei-KI", category: "sicherheit"},
+        {id: 193, text: "🚨 Kriminalprävention", category: "sicherheit"},
+        {id: 194, text: "👮 Bürgerschutz", category: "sicherheit"},
+        {id: 195, text: "🧑‍🎓 Jugend-Arbeitsplätze", category: "gesellschaft"},
+        {id: 196, text: "🏢 Neue Mittelstand-Förderung", category: "wirtschaft"},
+        {id: 197, text: "🏦 EU-Investitionsfonds", category: "wirtschaft"},
+        {id: 198, text: "📉 Staatskostensenkung", category: "wirtschaft"},
+        {id: 199, text: "🧑‍⚕️ Krankheitsprävention", category: "gesellschaft"},
+        {id: 200, text: "🕊️ Beitrag zum Weltfrieden", category: "politik"},
+        {id: 201, text: "📖 Digitale Schulbücher", category: "gesellschaft"},
+        {id: 202, text: "🏫 KI-Schulverwaltung", category: "gesellschaft"},
+        {id: 203, text: "🧑‍🏫 Lehrerentlastung", category: "gesellschaft"},
+        {id: 204, text: "🎓 Uni-Forschung fördern", category: "technologie"},
+        {id: 205, text: "🧪 Exzellenzcluster stärken", category: "technologie"},
+        {id: 206, text: "🏛️ KIT als EU-Hub", category: "technologie"},
+        {id: 207, text: "🔬 Helmholtz-Allianz", category: "technologie"},
+        {id: 208, text: "🧠 Max-Planck-Kooperation", category: "technologie"},
+        {id: 209, text: "📡 Fraunhofer-Projekte", category: "technologie"},
+        {id: 210, text: "🧑‍🎓 Nachwuchsförderung", category: "gesellschaft"},
+        {id: 211, text: "💶 Forschungsstipendien", category: "gesellschaft"},
+        {id: 212, text: "📊 Horizon Europe Mittel", category: "politik"},
+        {id: 213, text: "🏛️ EU-Digitalfonds", category: "politik"},
+        {id: 214, text: "💰 EIC Accelerator", category: "wirtschaft"},
+        {id: 215, text: "🏦 Investitionssicherheit", category: "wirtschaft"},
+        {id: 216, text: "📈 Kapitalmarkt fördern", category: "wirtschaft"},
+        {id: 217, text: "📉 Risikoabsicherung", category: "wirtschaft"},
+        {id: 218, text: "🛡️ Cyber-Versicherungen", category: "sicherheit"},
+        {id: 219, text: "🧑‍💼 Gründerförderung", category: "wirtschaft"},
+        {id: 220, text: "🚀 Startups in BW", category: "wirtschaft"},
+        {id: 221, text: "🏭 Clustereffekte", category: "wirtschaft"},
+        {id: 222, text: "🏙️ Stuttgart/Karlsruhe stärken", category: "wirtschaft"},
+        {id: 223, text: "🏢 Innovationsparks", category: "wirtschaft"},
+        {id: 224, text: "🧩 EU-Silicon Valley", category: "technologie"},
+        {id: 225, text: "📡 5G flächendeckend", category: "technologie"},
+        {id: 226, text: "🌐 Glasfaser", category: "technologie"},
+        {id: 227, text: "🛰️ Breitband Satellit", category: "technologie"},
+        {id: 228, text: "📱 Digitale Teilhabe", category: "gesellschaft"},
+        {id: 229, text: "🧑‍💻 Remote Work", category: "gesellschaft"},
+        {id: 230, text: "🏡 Homeoffice fördern", category: "gesellschaft"},
+        {id: 231, text: "⏱️ Work-Life-Balance", category: "gesellschaft"},
+        {id: 232, text: "💻 KI-Bürosoftware", category: "technologie"},
+        {id: 233, text: "🧾 Verwaltungstransparenz", category: "politik"},
+        {id: 234, text: "📑 Open Data", category: "politik"},
+        {id: 235, text: "🔍 Anti-Korruption", category: "politik"},
+        {id: 236, text: "🗄️ Digitales Grundbuch", category: "politik"},
+        {id: 237, text: "🏛️ Immobilienregister", category: "politik"},
+        {id: 238, text: "🧑‍⚖️ Justizdigitalisierung", category: "politik"},
+        {id: 239, text: "📜 Online-Gesetze", category: "politik"},
+        {id: 240, text: "🧾 Smart Contracts", category: "technologie"},
+        {id: 241, text: "💳 Digitale Währung EU", category: "wirtschaft"},
+        {id: 242, text: "🏦 EZB-Kooperation", category: "wirtschaft"},
+        {id: 243, text: "📊 Finanzmarktaufsicht", category: "wirtschaft"},
+        {id: 244, text: "📉 Krisenprävention", category: "wirtschaft"},
+        {id: 245, text: "🧑‍💼 Mittelstandsbanking", category: "wirtschaft"},
+        {id: 246, text: "💶 KI-Kreditsystem", category: "wirtschaft"},
+        {id: 247, text: "📈 Steueroptimierung", category: "wirtschaft"},
+        {id: 248, text: "📉 Schattenwirtschaft bekämpfen", category: "sicherheit"},
+        {id: 249, text: "🛡️ AML/KYC Automatisierung", category: "sicherheit"},
+        {id: 250, text: "🏦 Banken-Stabilität", category: "wirtschaft"},
+        {id: 251, text: "📊 Kapitalmarkt-Daten", category: "wirtschaft"},
+        {id: 252, text: "🧑‍⚖️ Verbraucherrechte", category: "politik"},
+        {id: 253, text: "📱 Digital Payments", category: "technologie"},
+        {id: 254, text: "🧾 E-Invoicing", category: "technologie"},
+        {id: 255, text: "💸 Subventionskontrolle", category: "politik"},
+        {id: 256, text: "📉 Haushaltsoptimierung", category: "politik"},
+        {id: 257, text: "🏛️ Budget-Transparenz", category: "politik"},
+        {id: 258, text: "📊 Parlaments-Controlling", category: "politik"},
+        {id: 259, text: "🗳️ Abstimmungen digital", category: "politik"},
+        {id: 260, text: "📈 Politmonitoring", category: "politik"},
+        {id: 261, text: "📰 Medienfreiheit sichern", category: "politik"},
+        {id: 262, text: "📡 Staatsmedien schützen", category: "politik"},
+        {id: 263, text: "📱 Social Media-Regeln", category: "politik"},
+        {id: 264, text: "🧑‍💻 Hackerabwehr", category: "sicherheit"},
+        {id: 265, text: "🛡️ Zero Trust", category: "sicherheit"},
+        {id: 266, text: "🔐 Quantenverschlüsselung", category: "sicherheit"},
+        {id: 267, text: "🔒 Cloud-Sicherheit", category: "sicherheit"},
+        {id: 268, text: "🛰️ Abhörsicherheit", category: "sicherheit"},
+        {id: 269, text: "🧩 Geheimdienstschutz", category: "sicherheit"},
+        {id: 270, text: "🧑‍⚖️ Datenschutz-Grundrechte", category: "politik"},
+        {id: 271, text: "📜 KI-Ethikrat", category: "politik"},
+        {id: 272, text: "🏛️ Bürgerrechte modernisieren", category: "politik"},
+        {id: 273, text: "🧑‍⚖️ ECHR-Unterstützung", category: "politik"},
+        {id: 274, text: "🌐 EU-Grundwerte", category: "politik"},
+        {id: 275, text: "🏛️ Demokratieschutz", category: "politik"},
+        {id: 276, text: "📈 Wahlbeteiligung erhöhen", category: "politik"},
+        {id: 277, text: "🗳️ Digitale Wahltools", category: "politik"},
+        {id: 278, text: "📱 Bürgerplattform", category: "politik"},
+        {id: 279, text: "🧑‍🤝‍🧑 Bürgerforen", category: "politik"},
+        {id: 280, text: "🗣️ Mitbestimmung stärken", category: "politik"},
+        {id: 281, text: "🗳️ Volksentscheide digital", category: "politik"},
+        {id: 282, text: "📡 E-Parlament EU", category: "politik"},
+        {id: 283, text: "🌍 Globale Governance", category: "politik"},
+        {id: 284, text: "🧑‍⚖️ KI-Rechtsrahmen", category: "politik"},
+        {id: 285, text: "📜 EU-AI-Act stärken", category: "politik"},
+        {id: 286, text: "🧑‍💼 Wirtschaftsethik", category: "wirtschaft"},
+        {id: 287, text: "🧾 Lieferkettenkontrolle", category: "wirtschaft"},
+        {id: 288, text: "📦 Zolloptimierung", category: "wirtschaft"},
+        {id: 289, text: "🚚 Supply Chain KI", category: "wirtschaft"},
+        {id: 290, text: "🚢 Exportsicherheit", category: "wirtschaft"},
+        {id: 291, text: "🚛 Logistik-Korridore", category: "wirtschaft"},
+        {id: 292, text: "🚄 Rail Cargo", category: "wirtschaft"},
+        {id: 293, text: "🛫 Export-Airports", category: "wirtschaft"},
+        {id: 294, text: "🏭 Rohstoffsicherung", category: "wirtschaft"},
+        {id: 295, text: "⛏️ Recycling", category: "gesellschaft"},
+        {id: 296, text: "🌱 Kreislaufwirtschaft", category: "gesellschaft"},
+        {id: 297, text: "🌍 Green Deal EU", category: "politik"},
+        {id: 298, text: "🔋 Energiespeicher", category: "technologie"},
+        {id: 299, text: "⚡ Wasserstoff", category: "technologie"},
+        {id: 300, text: "🌐 Blaupause für globale KI-Souveränität", category: "technologie"},
+        {id: 301, text: "🏛️ Deutschland als KI-Vorreiter", category: "politik"},
+        {id: 302, text: "🌍 Europa als KI-Weltmacht", category: "politik"},
+        {id: 303, text: "🛰️ Galileo-Integration mit KI", category: "technologie"},
+        {id: 304, text: "📡 Militärische Kommunikationssicherheit", category: "sicherheit"},
+        {id: 305, text: "🔐 Digitale Abschreckung", category: "sicherheit"},
+        {id: 306, text: "🛡️ Schutz kritischer Stromnetze", category: "sicherheit"},
+        {id: 307, text: "⚡ Blackout-Prävention", category: "sicherheit"},
+        {id: 308, text: "🔋 Smart-Batterien", category: "technologie"},
+        {id: 309, text: "🌞 Solar KI-Steuerung", category: "technologie"},
+        {id: 310, text: "💨 Windkraftoptimierung", category: "technologie"},
+        {id: 311, text: "🌊 Wellenenergie", category: "technologie"},
+        {id: 312, text: "⛽ Gasnetze überwachen", category: "sicherheit"},
+        {id: 313, text: "🚰 Wassernetz schützen", category: "sicherheit"},
+        {id: 314, text: "🏙️ Städte resilient machen", category: "gesellschaft"},
+        {id: 315, text: "🧱 Infrastruktur-Digital Twin", category: "technologie"},
+        {id: 316, text: "🛤️ Bahnnetzsteuerung", category: "technologie"},
+        {id: 317, text: "🚦 Ampelsteuerung", category: "technologie"},
+        {id: 318, text: "🚗 Autonome Polizei-Fahrzeuge", category: "sicherheit"},
+        {id: 319, text: "🚁 Luftrettung KI", category: "gesellschaft"},
+        {id: 320, text: "🚨 Krisenfrüherkennung", category: "sicherheit"},
+        {id: 321, text: "📊 Pandemie-Modellierung", category: "gesellschaft"},
+        {id: 322, text: "💉 Impfstofflogistik", category: "gesellschaft"},
+        {id: 323, text: "🧪 Virenerkennung", category: "gesellschaft"},
+        {id: 324, text: "🧬 DNA-Schutz", category: "gesellschaft"},
+        {id: 325, text: "🧑‍⚕️ Ärzteassistenz", category: "gesellschaft"},
+        {id: 326, text: "🧑‍⚕️ KI-Therapieplanung", category: "gesellschaft"},
+        {id: 327, text: "🧑‍⚕️ Psychische Gesundheit", category: "gesellschaft"},
+        {id: 328, text: "🧠 Alzheimer-Forschung", category: "gesellschaft"},
+        {id: 329, text: "🫀 Herzkrankheiten", category: "gesellschaft"},
+        {id: 330, text: "🫁 Lungenkrankheiten", category: "gesellschaft"},
+        {id: 331, text: "🧑‍🦽 Behindertenhilfe", category: "gesellschaft"},
+        {id: 332, text: "👵 Altersvorsorge", category: "gesellschaft"},
+        {id: 333, text: "👶 Kindergesundheit", category: "gesellschaft"},
+        {id: 334, text: "🍼 Frühdiagnostik", category: "gesellschaft"},
+        {id: 335, text: "🎓 Schulgesundheit", category: "gesellschaft"},
+        {id: 336, text: "🏫 KI in Klassenzimmern", category: "gesellschaft"},
+        {id: 337, text: "🧑‍🏫 Lehrertraining", category: "gesellschaft"},
+        {id: 338, text: "📚 Personalisiertes Lernen", category: "gesellschaft"},
+        {id: 339, text: "🖥️ EdTech-Plattformen", category: "technologie"},
+        {id: 340, text: "🧑‍🎓 Online-Campus", category: "gesellschaft"},
+        {id: 341, text: "📡 Hybrid-Unterricht", category: "gesellschaft"},
+        {id: 342, text: "📊 Bildungsanalysen", category: "gesellschaft"},
+        {id: 343, text: "🏛️ Ministeriumsdigitalisierung", category: "politik"},
+        {id: 344, text: "🗄️ Cloud für Behörden", category: "technologie"},
+        {id: 345, text: "🧩 Föderale KI-Plattform", category: "technologie"},
+        {id: 346, text: "🧾 E-Government Dienste", category: "politik"},
+        {id: 347, text: "📜 Digitales Melderegister", category: "politik"},
+        {id: 348, text: "🏦 KI für Sozialleistungen", category: "gesellschaft"},
+        {id: 349, text: "🏡 Wohngeld-Digitalisierung", category: "gesellschaft"},
+        {id: 350, text: "📉 Armutsbekämpfung", category: "gesellschaft"},
+        {id: 351, text: "🧑‍🤝‍🧑 Flüchtlingsintegration", category: "gesellschaft"},
+        {id: 352, text: "🛂 Grenzkontrolle", category: "sicherheit"},
+        {id: 353, text: "🛡️ Visaverwaltung", category: "politik"},
+        {id: 354, text: "📊 Migrationsanalysen", category: "politik"},
+        {id: 355, text: "🗺️ Asylpolitik-Daten", category: "politik"},
+        {id: 356, text: "🛡️ Terrorismusabwehr", category: "sicherheit"},
+        {id: 357, text: "🕵️ Extremismus-Monitoring", category: "sicherheit"},
+        {id: 358, text: "🚔 Polizei-Echtzeitdaten", category: "sicherheit"},
+        {id: 359, text: "🚨 Notrufautomatisierung", category: "sicherheit"},
+        {id: 360, text: "🧯 Feuerwehr-KI", category: "sicherheit"},
+        {id: 361, text: "🚒 Einsatzoptimierung", category: "sicherheit"},
+        {id: 362, text: "🚁 Drohnenrettung", category: "sicherheit"},
+        {id: 363, text: "🌋 Naturkatastrophen-Modelle", category: "sicherheit"},
+        {id: 364, text: "🌊 Tsunami-Frühwarnung", category: "sicherheit"},
+        {id: 365, text: "🌪️ Sturmerkennung", category: "sicherheit"},
+        {id: 366, text: "❄️ Schneesturm-Monitoring", category: "sicherheit"},
+        {id: 367, text: "🔥 Waldbrandvorhersage", category: "sicherheit"},
+        {id: 368, text: "🏔️ Lawinenwarnung", category: "sicherheit"},
+        {id: 369, text: "🧑‍🌾 Landwirtschaftsschutz", category: "wirtschaft"},
+        {id: 370, text: "🌾 Ernteprognosen", category: "wirtschaft"},
+        {id: 371, text: "🥦 Ernährungssicherheit", category: "gesellschaft"},
+        {id: 372, text: "🍏 Lebensmittelsicherheit", category: "gesellschaft"},
+        {id: 373, text: "🧑‍🍳 KI-Ernährung", category: "gesellschaft"},
+        {id: 374, text: "🏭 Lebensmittelproduktion", category: "wirtschaft"},
+        {id: 375, text: "🛒 Supply Chain Food", category: "wirtschaft"},
+        {id: 376, text: "🏢 Handel optimieren", category: "wirtschaft"},
+        {id: 377, text: "💳 Bezahlsysteme", category: "technologie"},
+        {id: 378, text: "🧾 Steuerfahndung", category: "politik"},
+        {id: 379, text: "🏦 Bankenprüfung", category: "wirtschaft"},
+        {id: 380, text: "📉 Schuldenmanagement", category: "wirtschaft"},
+        {id: 381, text: "💶 Staatsverschuldung senken", category: "wirtschaft"},
+        {id: 382, text: "📈 Konjunkturprognosen", category: "wirtschaft"},
+        {id: 383, text: "📊 Wirtschaftsdaten", category: "wirtschaft"},
+        {id: 384, text: "🧑‍💼 Industriepolitik", category: "wirtschaft"},
+        {id: 385, text: "🏗️ Infrastrukturplanung", category: "wirtschaft"},
+        {id: 386, text: "🛤️ Logistiknetzwerke", category: "wirtschaft"},
+        {id: 387, text: "🚄 Hochgeschwindigkeitszüge", category: "technologie"},
+        {id: 388, text: "✈️ Flughafenkapazität", category: "wirtschaft"},
+        {id: 389, text: "🛫 Flugroutenoptimierung", category: "technologie"},
+        {id: 390, text: "🚢 Schiffsverkehr", category: "wirtschaft"},
+        {id: 391, text: "🛳️ Frachtströme", category: "wirtschaft"},
+        {id: 392, text: "🏭 Rohstofflogistik", category: "wirtschaft"},
+        {id: 393, text: "🛠️ Produktionsketten", category: "wirtschaft"},
+        {id: 394, text: "🧩 Industrie-Cluster", category: "wirtschaft"},
+        {id: 395, text: "📊 Standortanalysen", category: "wirtschaft"},
+        {id: 396, text: "🏭 Fabrikautomatisierung", category: "wirtschaft"},
+        {id: 397, text: "🤖 Industrieroboter", category: "technologie"},
+        {id: 398, text: "🧑‍💻 KI-Entwicklerjobs", category: "wirtschaft"},
+        {id: 399, text: "👩‍🔬 Forscherstellen", category: "wirtschaft"},
+        {id: 400, text: "🧑‍🏫 Lehrstühle KI", category: "gesellschaft"},
+        {id: 401, text: "🚗 Autonomes Fahren Baden-Württemberg", category: "technologie"},
+        {id: 402, text: "🏭 Maschinenbau 4.0", category: "wirtschaft"},
+        {id: 403, text: "🔬 Pharmaforschung", category: "gesellschaft"},
+        {id: 404, text: "🧪 Chemische Industrie optimieren", category: "wirtschaft"},
+        {id: 405, text: "💎 Präzisionsinstrumente", category: "wirtschaft"},
+        {id: 406, text: "⚙️ Werkzeugmaschinenbau", category: "wirtschaft"},
+        {id: 407, text: "🏗️ Bauinnovationen", category: "wirtschaft"},
+        {id: 408, text: "🌐 Digitale Verwaltung", category: "politik"},
+        {id: 409, text: "📱 Mobile Government", category: "politik"},
+        {id: 410, text: "🖥️ Cloud First Strategie", category: "technologie"},
+        {id: 411, text: "🔐 Sichere Identitäten", category: "sicherheit"},
+        {id: 412, text: "📊 Datenanalytik Staat", category: "politik"},
+        {id: 413, text: "🧠 Predictive Governance", category: "politik"},
+        {id: 414, text: "🎯 Zielgenaue Förderung", category: "politik"},
+        {id: 415, text: "📈 Performance Management", category: "politik"},
+        {id: 416, text: "🔍 Fraud Detection", category: "sicherheit"},
+        {id: 417, text: "💰 Steueroptimierung KI", category: "wirtschaft"},
+        {id: 418, text: "🏦 Fintech Deutschland", category: "wirtschaft"},
+        {id: 419, text: "💳 Zahlungsverkehr sicher", category: "sicherheit"},
+        {id: 420, text: "📊 Risikomanagement", category: "wirtschaft"},
+        {id: 421, text: "🏛️ Regulatorische Innovation", category: "politik"},
+        {id: 422, text: "🌍 Internationale Standards setzen", category: "politik"},
+        {id: 423, text: "🤝 Multilaterale Kooperationen", category: "politik"},
+        {id: 424, text: "🛡️ Cyber-Diplomatie", category: "politik"},
+        {id: 425, text: "📡 Digitale Botschaften", category: "politik"},
+        {id: 426, text: "🌐 Internet Governance", category: "politik"},
+        {id: 427, text: "🔒 Datenschutz global", category: "politik"},
+        {id: 428, text: "🧑‍💼 Chief Digital Officer", category: "politik"},
+        {id: 429, text: "📋 Digitale Agenda 2030", category: "politik"},
+        {id: 430, text: "🎯 KI-Strategie umsetzen", category: "politik"},
+        {id: 431, text: "🏗️ Digitale Infrastruktur", category: "technologie"},
+        {id: 432, text: "⚡ Edge Computing", category: "technologie"},
+        {id: 433, text: "🌐 5G/6G Netzwerke", category: "technologie"},
+        {id: 434, text: "💾 Datenhoheit", category: "sicherheit"},
+        {id: 435, text: "🔐 Verschlüsselung Standard", category: "sicherheit"},
+        {id: 436, text: "🛡️ Privacy by Design", category: "sicherheit"},
+        {id: 437, text: "📊 Algorithmus-Transparenz", category: "politik"},
+        {id: 438, text: "⚖️ KI-Gerechtigkeit", category: "politik"},
+        {id: 439, text: "🧑‍⚖️ Digitale Rechte", category: "politik"},
+        {id: 440, text: "📜 Verfassung digital", category: "politik"},
+        {id: 441, text: "🗳️ E-Democracy", category: "politik"},
+        {id: 442, text: "🏛️ Parlament 4.0", category: "politik"},
+        {id: 443, text: "📱 Bürgerdialog digital", category: "politik"},
+        {id: 444, text: "🌍 Global Digital Compact", category: "politik"},
+        {id: 445, text: "🤖 Robotik-Zentrum", category: "technologie"},
+        {id: 446, text: "🧠 Neuroinformatik", category: "technologie"},
+        {id: 447, text: "🔬 Quantencomputing Hub", category: "technologie"},
+        {id: 448, text: "💡 Deep Tech Ventures", category: "wirtschaft"},
+        {id: 449, text: "🚀 Unicorn-Förderung", category: "wirtschaft"},
+        {id: 450, text: "💰 Venture Capital deutsch", category: "wirtschaft"},
+        {id: 451, text: "🏦 Staatsbank für Technologie", category: "wirtschaft"},
+        {id: 452, text: "📈 IPO-Standort stärken", category: "wirtschaft"},
+        {id: 453, text: "🌐 Digitaler Binnenmarkt", category: "wirtschaft"},
+        {id: 454, text: "🔄 Plattformökonomie", category: "wirtschaft"},
+        {id: 455, text: "📊 Data Economy", category: "wirtschaft"},
+        {id: 456, text: "🤖 Automatisierung ethisch", category: "gesellschaft"},
+        {id: 457, text: "🧑‍💻 Arbeitsplatz der Zukunft", category: "gesellschaft"},
+        {id: 458, text: "📚 Lebenslanges Lernen", category: "gesellschaft"},
+        {id: 459, text: "🎓 Digitale Kompetenzen", category: "gesellschaft"},
+        {id: 460, text: "👶 KI für Kinder sicher", category: "gesellschaft"},
+        {id: 461, text: "👵 Senioren digital", category: "gesellschaft"},
+        {id: 462, text: "♿ Barrierefreiheit KI", category: "gesellschaft"},
+        {id: 463, text: "🌍 Digital Divide schließen", category: "gesellschaft"},
+        {id: 464, text: "🏥 Gesundheitsdaten schützen", category: "gesellschaft"},
+        {id: 465, text: "🧬 Genomdaten sicher", category: "gesellschaft"},
+        {id: 466, text: "🔬 Forschungsdaten offen", category: "technologie"},
+        {id: 467, text: "📊 Open Science", category: "technologie"},
+        {id: 468, text: "🌐 FAIR Data", category: "technologie"},
+        {id: 469, text: "📖 Open Source fördern", category: "technologie"},
+        {id: 470, text: "🧑‍💻 Developer Community", category: "technologie"},
+        {id: 471, text: "🎮 Gaming Industry", category: "wirtschaft"},
+        {id: 472, text: "🎬 Medienindustrie 4.0", category: "wirtschaft"},
+        {id: 473, text: "🎨 Kreativwirtschaft KI", category: "wirtschaft"},
+        {id: 474, text: "📺 Public Broadcasting KI", category: "gesellschaft"},
+        {id: 475, text: "📰 Journalismus KI", category: "gesellschaft"},
+        {id: 476, text: "📚 Verlage digital", category: "gesellschaft"},
+        {id: 477, text: "🎵 Musikindustrie", category: "wirtschaft"},
+        {id: 478, text: "🏛️ Kulturerbe digital", category: "gesellschaft"},
+        {id: 479, text: "🏛️ Museen virtuell", category: "gesellschaft"},
+        {id: 480, text: "🎭 Theater KI", category: "gesellschaft"},
+        {id: 481, text: "🏃‍♀️ Sport-Analytics", category: "gesellschaft"},
+        {id: 482, text: "⚽ Bundesliga KI", category: "gesellschaft"},
+        {id: 483, text: "🚴‍♀️ Gesundheitsförderung", category: "gesellschaft"},
+        {id: 484, text: "🏥 Präventionsmedizin", category: "gesellschaft"},
+        {id: 485, text: "🧘‍♀️ Mental Health KI", category: "gesellschaft"},
+        {id: 486, text: "👨‍⚕️ Hausarzt KI", category: "gesellschaft"},
+        {id: 487, text: "🚑 Notfallmedizin", category: "gesellschaft"},
+        {id: 488, text: "🏥 Krankenhaus 4.0", category: "gesellschaft"},
+        {id: 489, text: "💊 Pharmakovigilanz", category: "gesellschaft"},
+        {id: 490, text: "🧪 Klinische Studien KI", category: "gesellschaft"},
+        {id: 491, text: "🔬 Precision Medicine", category: "gesellschaft"},
+        {id: 492, text: "🧬 Personalisierte Therapie", category: "gesellschaft"},
+        {id: 493, text: "🧑‍⚕️ Telehealth Plattformen", category: "gesellschaft"},
+        {id: 494, text: "📱 Health Apps sicher", category: "gesellschaft"},
+        {id: 495, text: "🏥 Medizintechnik Export", category: "wirtschaft"},
+        {id: 496, text: "🔬 Life Sciences Hub", category: "technologie"},
+        {id: 497, text: "💉 Impfstoffentwicklung", category: "gesellschaft"},
+        {id: 498, text: "🦠 Pandemie-Preparedness", category: "gesellschaft"},
+        {id: 499, text: "🧑‍🔬 One Health Ansatz", category: "gesellschaft"},
+        {id: 500, text: "🌍 Globale Gesundheit", category: "gesellschaft"}
+    ];
+
+    let currentReasons = [...reasons];
+    let activeCategory = 'all';
+
+    function renderReasons() {
+        const grid = document.getElementById('reasonsGrid');
+        grid.innerHTML = '';
+        
+        currentReasons.forEach(reason => {
+            const reasonDiv = document.createElement('div');
+            reasonDiv.className = 'reason-item fade-in';
+            reasonDiv.innerHTML = `
+                <div class="reason-number">#${reason.id}</div>
+                <div class="reason-text">${reason.text}</div>
+            `;
+            reasonDiv.addEventListener('click', () => {
+                reasonDiv.classList.toggle('active');
+            });
+            grid.appendChild(reasonDiv);
+        });
+    }
+
+    function filterReasons(category) {
+        activeCategory = category;
+        if (category === 'all') {
+            currentReasons = [...reasons];
+        } else {
+            currentReasons = reasons.filter(reason => reason.category === category);
+        }
+        renderReasons();
+        updateActiveFilter();
+    }
+
+    function searchReasons(query) {
+        const searchTerm = query.toLowerCase();
+        if (!searchTerm) {
+            filterReasons(activeCategory);
+            return;
+        }
+        
+        if (activeCategory === 'all') {
+            currentReasons = reasons.filter(reason => 
+                reason.text.toLowerCase().includes(searchTerm)
+            );
+        } else {
+            currentReasons = reasons.filter(reason => 
+                reason.category === activeCategory && 
+                reason.text.toLowerCase().includes(searchTerm)
+            );
+        }
+        renderReasons();
+    }
+
+    function updateActiveFilter() {
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.classList.remove('active');
+        });
+        document.querySelector(`[data-category="${activeCategory}"]`).classList.add('active');
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderReasons();
+        
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchReasons(e.target.value);
+        });
+        
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                filterReasons(e.target.dataset.category);
+            });
+        });
+    });
+
+    // Smooth scroll for CTA buttons
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add floating effect to hero elements
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('.hero-content');
+        if (parallax) {
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        }
+    });
+</script>
+
+<div id="join" style="height: 100px;"></div>
+<div id="contact" style="height: 100px;"></div>
+```
+
+</body>
+</html>
