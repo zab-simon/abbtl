@@ -1,0 +1,41 @@
+name: Claude agent
+
+# Агент отвечает:
+#  - на новый issue с меткой "agent" или со словом /agent в тексте;
+#  - на комментарий, содержащий /agent.
+on:
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  contents: read
+
+concurrency:
+  group: agent-${{ github.event.issue.number }}
+
+jobs:
+  reply:
+    # Только владелец и участники репозитория могут вызывать агента,
+    # чтобы посторонние не тратили ваши API-кредиты.
+    if: >-
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'),
+               github.event.comment.author_association || github.event.issue.author_association)
+      && (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/agent'))
+        || (github.event_name == 'issues' && github.event.action == 'opened' && contains(github.event.issue.body, '/agent'))
+        || (github.event_name == 'issues' && github.event.label.name == 'agent')
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r agent/requirements.txt
+      - run: python agent/agent.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
