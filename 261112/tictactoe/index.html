@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f4f1ea">
+<title>Крестики-нолики</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --panel: #ffffff;
+    --line: #2b2b2b;
+    --text: #1d1d1d;
+    --muted: #7a756c;
+    --x: #e2483d;
+    --o: #2f6fdf;
+    --win: #ffe08a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16171b;
+      --panel: #222429;
+      --line: #d9d9d9;
+      --text: #f1f1f1;
+      --muted: #9a9ca3;
+      --x: #ff6b5f;
+      --o: #5c95ff;
+      --win: #5a4a12;
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5vmin;
+    min-height: 100dvh;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+             max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    overflow: hidden;
+  }
+  .score {
+    display: flex;
+    gap: 4vmin;
+    font-size: clamp(16px, 4vmin, 34px);
+    font-weight: 700;
+  }
+  .score span { display: inline-flex; align-items: center; gap: .4em; padding: .25em .7em; border-radius: 999px; }
+  .score .active { background: var(--panel); box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  .sx { color: var(--x); }
+  .so { color: var(--o); }
+  .sd { color: var(--muted); }
+  .status {
+    font-size: clamp(18px, 4.5vmin, 40px);
+    font-weight: 600;
+    min-height: 1.3em;
+    text-align: center;
+  }
+  .board {
+    --size: min(92vw, calc(100dvh - 15em - env(safe-area-inset-top) - env(safe-area-inset-bottom)), 640px);
+    width: var(--size);
+    height: var(--size);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: calc(var(--size) * 0.025);
+    background: var(--line);
+    border-radius: calc(var(--size) * 0.04);
+    overflow: hidden;
+  }
+  .cell {
+    background: var(--panel);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+  }
+  .cell:disabled { cursor: default; }
+  .cell.win { background: var(--win); }
+  .cell svg { width: 70%; height: 70%; overflow: visible; }
+  .cell svg * {
+    fill: none;
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: draw .25s ease-out forwards;
+  }
+  .cell svg .x { stroke: var(--x); }
+  .cell svg .x2 { stroke: var(--x); animation-delay: .12s; }
+  .cell svg .o { stroke: var(--o); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .controls { display: flex; gap: 3vmin; }
+  button.btn {
+    font: inherit;
+    font-size: clamp(16px, 3.8vmin, 28px);
+    font-weight: 600;
+    padding: .6em 1.4em;
+    border-radius: 999px;
+    border: 0;
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+  }
+  button.btn.ghost { background: transparent; color: var(--muted); }
+  @media (orientation: landscape) and (max-height: 600px) {
+    body {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-template-areas: "board score" "board status" "board controls";
+      align-content: center;
+      justify-content: center;
+      column-gap: 6vw;
+      row-gap: 4vh;
+    }
+    .score { grid-area: score; justify-self: center; align-self: end; }
+    .status { grid-area: status; }
+    .controls { grid-area: controls; flex-direction: column; align-self: start; }
+    .board {
+      grid-area: board;
+      --size: min(calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)), 55vw, 640px);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="score">
+    <span id="px" class="sx">✕ <b id="wx">0</b></span>
+    <span class="sd">= <b id="wd">0</b></span>
+    <span id="po" class="so">◯ <b id="wo">0</b></span>
+  </div>
+  <div class="status" id="status"></div>
+  <div class="board" id="board"></div>
+  <div class="controls">
+    <button class="btn" id="again">Новая игра</button>
+    <button class="btn ghost" id="reset">Сбросить счёт</button>
+  </div>
+
+<script>
+  const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  const SVG = {
+    X: '<svg viewBox="0 0 100 100"><line class="x" x1="15" y1="15" x2="85" y2="85"/><line class="x2" x1="85" y1="15" x2="15" y2="85"/></svg>',
+    O: '<svg viewBox="0 0 100 100"><circle class="o" cx="50" cy="50" r="36"/></svg>'
+  };
+  const boardEl = document.getElementById('board');
+  const statusEl = document.getElementById('status');
+  const score = { X: 0, O: 0, D: 0 };
+  let cells, turn, starter = 'X', over;
+
+  for (let i = 0; i < 9; i++) {
+    const b = document.createElement('button');
+    b.className = 'cell';
+    b.setAttribute('aria-label', 'Клетка ' + (i + 1));
+    b.addEventListener('click', () => play(i));
+    boardEl.appendChild(b);
+  }
+  const btns = [...boardEl.children];
+
+  function newGame() {
+    cells = Array(9).fill(null);
+    turn = starter;
+    over = false;
+    btns.forEach(b => { b.innerHTML = ''; b.disabled = false; b.classList.remove('win'); });
+    render();
+  }
+
+  function play(i) {
+    if (over || cells[i]) return;
+    cells[i] = turn;
+    btns[i].innerHTML = SVG[turn];
+    btns[i].disabled = true;
+    const line = LINES.find(l => l.every(k => cells[k] === turn));
+    if (line) {
+      over = true;
+      score[turn]++;
+      line.forEach(k => btns[k].classList.add('win'));
+      statusEl.innerHTML = 'Победа: ' + mark(turn) + ' 🎉';
+      finish();
+    } else if (cells.every(Boolean)) {
+      over = true;
+      score.D++;
+      statusEl.textContent = 'Ничья';
+      finish();
+    } else {
+      turn = turn === 'X' ? 'O' : 'X';
+      render();
+    }
+  }
+
+  function finish() {
+    btns.forEach(b => b.disabled = true);
+    starter = starter === 'X' ? 'O' : 'X';   // следующую партию начинает другой игрок
+    updateScore(null);
+  }
+
+  function mark(p) { return p === 'X' ? '<span class="sx">✕</span>' : '<span class="so">◯</span>'; }
+
+  function render() {
+    statusEl.innerHTML = 'Ходит ' + mark(turn);
+    updateScore(turn);
+  }
+
+  function updateScore(active) {
+    document.getElementById('wx').textContent = score.X;
+    document.getElementById('wo').textContent = score.O;
+    document.getElementById('wd').textContent = score.D;
+    document.getElementById('px').classList.toggle('active', active === 'X');
+    document.getElementById('po').classList.toggle('active', active === 'O');
+  }
+
+  document.getElementById('again').addEventListener('click', newGame);
+  document.getElementById('reset').addEventListener('click', () => {
+    score.X = score.O = score.D = 0; starter = 'X'; newGame();
+  });
+  newGame();
+</script>
+</body>
+</html>
