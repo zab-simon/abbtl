@@ -16,4 +16,4 @@
 
 Вызвать агента могут только владелец и участники репозитория.
 Модель можно сменить переменной `AGENT_MODEL` в `.github/workflows/agent.yml`,
-а характер агента — в `SYSTEM_PROMPT` в `agent/agent.py`.
+а характер агента — в `SYSTEM_PROMPT` в `261112/agent.py`.
