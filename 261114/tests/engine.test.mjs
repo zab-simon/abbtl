@@ -195,6 +195,11 @@ test('благотворительность: 10% общего дохода, 2 �
   s = ok(s, { type: 'CHARITY', playerId: p.id, accept: true });
   assert.equal(s.players[0].cash, 100000 - Math.round(inc * 0.1));
   assert.equal(s.players[0].charityTurns, 3);
+  // следующий бросок — сразу две кости
+  s.phase = 'roll';
+  s = ok(s, { type: 'ROLL', playerId: p.id });
+  assert.equal(s.lastRoll.dice.length, 2);
+  assert.equal(s.players[0].charityTurns, 2);
 });
 
 test('выход из круга в начале хода', () => {

@@ -2,5 +2,5 @@
   "name": "vyhod-iz-kruga",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test tests/engine.test.mjs" }
+  "scripts": { "test": "node --test tests/engine.test.mjs tests/net.test.mjs" }
 }

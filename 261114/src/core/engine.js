@@ -155,7 +155,7 @@ const HANDLERS = {
     requirePhase(state, 'roll');
     let diceCount = 1;
     if (p.charityTurns > 0) {
-      diceCount = action.dice === 1 ? 1 : 2;   // благотворительность даёт право на 2 кубика
+      diceCount = 2;            // благотворительность: 3 хода бросаете по две кости сразу
       p.charityTurns -= 1;
     }
     const dice = [];
@@ -571,5 +571,5 @@ function nextPlayer(state, events) {
   startTurn(state, events);
 }
 
-// Сколько кубиков может бросить игрок сейчас.
-export function diceOptions(p) { return p.charityTurns > 0 ? [1, 2] : [1]; }
+// Сколько кубиков бросает игрок сейчас.
+export function diceCount(p) { return p.charityTurns > 0 ? 2 : 1; }

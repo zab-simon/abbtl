@@ -57,7 +57,7 @@ export function cardFace(id) {
 }
 
 // Действия по активной карточке для всех игроков (одно устройство).
-export function cardActions(state, act) {
+export function cardActions(state, act, canControl = () => true) {
   const c = getCard(state.card.id);
   const holder = state.players.find(p => p.id === state.card.holderId);
   const active = state.players.filter(p => p.status === 'playing');
@@ -65,7 +65,7 @@ export function cardActions(state, act) {
 
   if (c.type === 'asset') {
     out.push(h('div.hint', {}, t('hint.holder', { player: holder.name })));
-    if (!state.card.bought) {
+    if (!state.card.bought && canControl(holder.id)) {
       out.push(h('div.row', {},
         h('button.primary', { onclick: () => act({ type: 'BUY_ASSET', playerId: holder.id }), disabled: holder.cash < c.down ? true : null }, t('act.buy', { amount: money(c.down) })),
         c.noLoan ? null : loanButton(holder, c.down, act)));
@@ -83,6 +83,7 @@ export function cardActions(state, act) {
   if (c.type === 'stock') {
     const buyers = c.anyoneBuys ? active : [holder];
     for (const p of active) {
+      if (!canControl(p.id)) continue;
       const lots = p.stocks.filter(s => s.symbol === c.symbol);
       const canBuy = buyers.includes(p);
       if (!canBuy && !lots.length) continue;
@@ -107,6 +108,7 @@ export function cardActions(state, act) {
     let any = false;
     const rows = [];
     for (const p of active) for (const a of p.assets) {
+      if (!canControl(p.id)) continue;
       const offer = marketOffer(state, c, p, a);
       if (offer === null) continue;
       any = true;
@@ -120,7 +122,7 @@ export function cardActions(state, act) {
     }
   }
 
-  if (state.pending) out.push(pendingBox(state, act));
+  if (state.pending && canControl(state.pending.playerId)) out.push(pendingBox(state, act));
   return out;
 }
 
