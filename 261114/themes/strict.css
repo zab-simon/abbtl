@@ -1,0 +1,32 @@
+/* Тема «Строгая». Только переменные. */
+:root {
+  --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bg: #eceff1;
+  --bg2: #eceff1;
+  --panel: #ffffff;
+  --text: #1c2327;
+  --muted: #607d8b;
+  --accent: #263238;
+  --accent-text: #ffffff;
+  --border: #b0bec5;
+  --ring: #90a4ae;
+  --cell-stroke: #78909c;
+  --cell-opportunity: #e8f5e9;
+  --cell-doodad: #fce4ec;
+  --cell-charity: #fff3e0;
+  --cell-paycheck: #fffde7;
+  --cell-market: #ede7f6;
+  --cell-baby: #f3e5f5;
+  --cell-downsized: #eceff1;
+  --center: #ffffff;
+  --deck-small: #f1f8e9;
+  --deck-big: #e8f5e9;
+  --deck-market: #ede7f6;
+  --deck-doodad: #fce4ec;
+  --pos: #2e7d32;
+  --neg: #c62828;
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .15);
+  --title: #263238;
+  --title-stroke: transparent;
+}

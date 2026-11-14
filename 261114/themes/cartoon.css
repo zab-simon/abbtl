@@ -1,0 +1,32 @@
+/* Тема «Яркая» (по умолчанию). Меняются только переменные — разметка общая (base.css). */
+:root {
+  --font: 'Nunito', system-ui, -apple-system, sans-serif;
+  --bg: #4fb3f6;
+  --bg2: #a8dcff;
+  --panel: #ffffff;
+  --text: #2b1640;
+  --muted: #6b5a7d;
+  --accent: #8e24aa;
+  --accent-text: #ffffff;
+  --border: #8e24aa;
+  --ring: #3a6ee8;
+  --cell-stroke: #8e24aa;
+  --cell-opportunity: #7ed99a;
+  --cell-doodad: #f7a8c8;
+  --cell-charity: #ffb27a;
+  --cell-paycheck: #fff59d;
+  --cell-market: #d9cff5;
+  --cell-baby: #c9b3f0;
+  --cell-downsized: #d7d3e8;
+  --center: #fde7f3;
+  --deck-small: #c8f0d4;
+  --deck-big: #b7e4c7;
+  --deck-market: #e3dcfa;
+  --deck-doodad: #ffd1e3;
+  --pos: #1b8a3a;
+  --neg: #d32f2f;
+  --radius: 18px;
+  --shadow: 0 6px 0 rgba(43, 22, 64, .18);
+  --title: #ffd54f;
+  --title-stroke: #8e24aa;
+}
